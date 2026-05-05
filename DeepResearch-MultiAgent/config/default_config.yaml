@@ -1,0 +1,53 @@
+# DeepResearch-MultiAgent 默认配置
+# 部分配置可通过环境变量或 .env 文件覆盖
+
+app:
+  name: "DeepResearch-MultiAgent"
+  version: "2.3.1"
+  log_level: "INFO"
+
+retrieval:
+  sources:
+    - "arxiv"
+    - "semantic_scholar"
+    - "dblp"
+  screening_threshold: 0.72
+  max_candidates: 30
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+
+parsing:
+  max_workers: 3
+  steps:
+    - "structure_extraction"
+    - "claim_extraction"
+    - "logic_verification"
+    - "summary_generation"
+    - "cross_reference"
+
+debate:
+  max_rounds: 3
+  models:
+    proponent: "deepseek-chat"
+    opponent: "deepseek-chat"
+
+knowledge_graph:
+  storage: "neo4j"
+  trend_detection:
+    algorithm: "louvain"
+    min_cluster_size: 5
+    growth_threshold_pct: 50
+
+llm_providers:
+  deepseek:
+    pro_model: "deepseek-chat"
+    flash_model: "deepseek-reasoner"
+    max_tokens: 8192
+    temperature: 0.3
+  glm:
+    model: "glm-4-flash"
+    max_tokens: 4096
+    temperature: 0.5
+  openai:
+    model: "gpt-4o"
+    max_tokens: 8192
+    temperature: 0.3
